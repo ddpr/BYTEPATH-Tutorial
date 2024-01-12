@@ -1,0 +1,44 @@
+1. 
+    Q: What is the role that Vsync plays in the game loop? 
+        It is enabled by default and you can disable it by calling love.window.setMode with the vsync attribute set to false.
+    A: 
+        -Vsync (short for vertical synchronization) synchronizes the frame rate of your graphics card with your monitors refresh rate.
+            This is done to prevent screen tearing in graphic-itensive applications.
+        - I disabled vsynch by adding the line: love.window.setMode(800,600,{vsync=false}) to love.load() where the arguements are 
+            (width,height,{flags}).
+
+For Questions 2-5, they reference an article named 'Fix Your Timestep,' which I found at both:
+    -https://gafferongames.com/post/fix_your_timestep/
+                        and
+    -https://github.com/mas-bandwidth/gafferongames/blob/master/content/post/fix_your_timestep.md
+
+2. 
+    Q: Implement the Fixed Delta Time loop from the Fix Your Timestep article by changing love.run.
+
+    A: Implementing a Fixed Delta Time loop would involve removing the default delta time loop from love.run() and adding 
+            a variable with a fixed delta time value. In this case, we use: 
+                local dt = 1/60. This is so that when love.update(dt) is called, it updates at a fixed rate.
+
+3.
+    Q: Implement the Variable Delta Time loop from the Fix Your Timestep article by changing love.run.
+
+    A: The default game loop happens to already incorporate a variable delta time loop inside its logic.
+
+
+4.
+    Q: Implement the Semi-Fixed Timestep loop from the Fix Your Timestep article by changing love.run.
+
+    A: To implement a Semi-Fixed Timestep loop, we create a value that serves as the upperbound for what the delta time value could be.
+        The logic block for this is:
+
+        while dt > 0 do
+            local current_dt = math.min(dt, upper_dt)
+            if love.update then love.update(current_dt) end
+            dt = dt - current_dt
+        end
+        
+5.
+
+    Q:Implement the Free the Physics loop from the Fix Your Timestep article by changing love.run.
+
+    A: To implement the Free the Physics loop, 
